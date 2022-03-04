@@ -1,46 +1,34 @@
-# Getting Started with Create React App
+### Code Book
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Challenges 
+- User input code is `String`, which should be interpreted safetly to execute
+  - compilation error or runtime error should not crash the entire App
+- In addition to pure `JS` syntax, `JSX` needs some preprocessing for the browser to understand
+- Integrated with `modules`, either `CommonJs` or `ES Modules` syntax should be understood before executing the code
+  - self-defined modules
+  - online NPM packages
+  - CSS styling code
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Design Choices
+- How to _transpile_
+  - option 1: outsource **remote** backend server API to run Babel 
+  - option 2: **in-browser** transpiler as the foundation
+- How to _bundle_ modules
+  - `Webpack` bundler, taking multiple different modules, combining them all together and linking them into a single file
+    - option 1: running `Webpack` on the **remote server**, interpose own customized plugin to make a request to `NPM Registry`, return the source code for the bundling process on the remote server
+    - option 2: maintaining the above logic in the **loacl React App** with customized plugin for changing `Webpack` behavior
+  ###### Reasoning
+  - Remote procedure
+    - download and cache NPM packages on the remote server => bundle for multiple users more quickly
+    - better support for different devices and low bandwidth cases 
+      - extra request to remote server is unavoidable
+  - Local procedure
+    - faster code execution (save waiting time)
+    - no need to maintain the logic for connecting remote server
+    - simplicity, also as no commercial use
+      - so for any developer, just run the infrastructure and use the tool
+  - Conclusion
+    - using **Local Design**
+    - in addition, using `ESBuild` instead of `Webpack` as it cannot be used in the browser
+      - `ESBuild` supports in-browser transpiling and bundling
+      - way much faster
