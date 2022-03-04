@@ -31,4 +31,4 @@
     - using **Local Design**
     - in addition, using `ESBuild` instead of `Webpack` as it cannot be used in the browser
       - `ESBuild` supports in-browser transpiling and bundling
-      - way much faster
+      - way much faster (written as Go underneath, translate JS into web assembly binary)
