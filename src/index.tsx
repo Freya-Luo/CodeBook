@@ -1,6 +1,7 @@
 import * as esbuild from 'esbuild-wasm'
 import ReactDOM from 'react-dom'
 import { useState, useEffect, useRef } from 'react'
+import { unpkgPathPlugin } from './plugins/unpkg-path'
 
 const App = () => {
     const [input, setInput] = useState('')
@@ -22,11 +23,14 @@ const App = () => {
 
     const onClick = async () => {
         if (!ref.current) return
-        // get the transpiler from ESBuild
-        const transpiler = ref.current.transform
-        const res = await transpiler(input, {
-            loader: 'jsx',
-            target: 'es2015',
+        // get the builder (combined transpiler & bundler) from ESBuild
+        const builder = ref.current.build
+        const res = await builder({
+            // {}
+            entryPoints: ['index.js'],
+            bundle: true,
+            write: false,
+            plugins: [unpkgPathPlugin()],
         })
         setCode(res.code)
         console.log(res)
