@@ -6,13 +6,13 @@ import { fetchFilePlugin } from './plugins/fetch-file'
 
 const App = () => {
   const [input, setInput] = useState('')
-  const [code, setCode] = useState('')
-  const ref = useRef<any>()
+  const serviceRef = useRef<any>()
+  const iframeRef = useRef<any>()
 
   // initialize the ESBuild
   const execService = async () => {
     // make this service to be available outside the execService function
-    ref.current = await esbuild.startService({
+    serviceRef.current = await esbuild.startService({
       worker: true,
       wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
     })
@@ -23,9 +23,14 @@ const App = () => {
   }, []) // execute the service only 1 time
 
   const onClick = async () => {
-    if (!ref.current) return
+    if (!serviceRef.current) return
+
+    // dump all previous execution variables and changes
+    // and get a newly fresh iframe environment
+    iframeRef.current.srcdoc = iframeHTML
+
     // get the builder (combined transpiler & bundler) from ESBuild
-    const builder = ref.current.build
+    const builder = serviceRef.current.build
     const res = await builder({
       // {}
       entryPoints: ['index.js'],
@@ -37,14 +42,32 @@ const App = () => {
         global: 'window',
       },
     })
-    setCode(res.outputFiles[0].text)
+
+    // parent window (React App) emit user input code to the iframe (pass down)
+    // * for allowing for any domain (still relative secure as stated tradeoff in README)
+    iframeRef.current.contentWindow.postMessage(res.outputFiles[0].text, '*')
   }
 
-  // generating iframe content locally
+  // generate iframe content locally
+  // listen for any input code from the parent window and execute it
   const iframeHTML = `
-    <script>
-      ${code}
-    </script>
+    <html>
+      <head></head>
+      <body>
+        <div id="root"></div>
+        <script>
+          window.addEventListener('message', (e) => {
+            try {
+              eval(e.data)
+            } catch (err) {
+              const root = document.querySelector('#root')
+              root.innerHTML = '<div style="color: red"><h4>Runtime Error</h4>' + err + '</div>'
+              console.error(err);
+            }
+          }, false);
+        </script>
+      </body>
+    </html>
   `
 
   return (
@@ -52,9 +75,8 @@ const App = () => {
       <textarea value={input} onChange={(e) => setInput(e.target.value)}></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
-        <pre>{code}</pre>
-        <iframe sandbox='allow-scripts' srcDoc={iframeHTML} />
       </div>
+      <iframe ref={iframeRef} sandbox='allow-scripts' srcDoc={iframeHTML} />
     </div>
   )
 }
