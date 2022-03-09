@@ -30,18 +30,19 @@ const App = () => {
             entryPoints: ['index.js'],
             bundle: true,
             write: false,
-            plugins: [unpkgPathPlugin()],
+            plugins: [unpkgPathPlugin(input)],
+            define: {
+                'process.env.NODE_ENV': '"production"', // to get the string 'production' not a var
+                global: 'window',
+            },
         })
-        setCode(res.code)
+        setCode(res.outputFiles[0].text)
         console.log(res)
     }
 
     return (
         <div>
-            <textarea
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-            ></textarea>
+            <textarea value={input} onChange={(e) => setInput(e.target.value)}></textarea>
             <div>
                 <button onClick={onClick}>Submit</button>
                 <pre>{code}</pre>
