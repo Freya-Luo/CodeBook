@@ -38,8 +38,14 @@ const App = () => {
       },
     })
     setCode(res.outputFiles[0].text)
-    console.log(res)
   }
+
+  // generating iframe content locally
+  const iframeHTML = `
+    <script>
+      ${code}
+    </script>
+  `
 
   return (
     <div>
@@ -47,6 +53,7 @@ const App = () => {
       <div>
         <button onClick={onClick}>Submit</button>
         <pre>{code}</pre>
+        <iframe sandbox='allow-scripts' srcDoc={iframeHTML} />
       </div>
     </div>
   )
