@@ -5,11 +5,12 @@ import { useState, useEffect, useRef } from 'react'
 import { unpkgPathPlugin } from './plugins/unpkg-path'
 import { fetchFilePlugin } from './plugins/fetch-file'
 import CodeEditor from './components/code-editor'
+import Preview from './components/preview'
 
 const App = () => {
   const [input, setInput] = useState('')
+  const [code, setCode] = useState('')
   const serviceRef = useRef<any>()
-  const iframeRef = useRef<any>()
 
   // initialize the ESBuild
   const execService = async () => {
@@ -27,10 +28,6 @@ const App = () => {
   const onClick = async () => {
     if (!serviceRef.current) return
 
-    // dump all previous execution variables and changes
-    // and get a newly fresh iframe environment
-    iframeRef.current.srcdoc = iframeHTML
-
     // get the builder (combined transpiler & bundler) from ESBuild
     const builder = serviceRef.current.build
     const res = await builder({
@@ -44,41 +41,16 @@ const App = () => {
       },
     })
 
-    // parent window (React App) emit user input code to the iframe (pass down)
-    // * for allowing for any domain (still relative secure as stated tradeoff in README)
-    iframeRef.current.contentWindow.postMessage(res.outputFiles[0].text, '*')
+    setCode(res.outputFiles[0].text)
   }
-
-  // generate iframe content locally
-  // listen for any input code from the parent window and execute it
-  const iframeHTML = `
-    <html>
-      <head></head>
-      <body>
-        <div id="root"></div>
-        <script>
-          window.addEventListener('message', (e) => {
-            try {
-              eval(e.data)
-            } catch (err) {
-              const root = document.querySelector('#root')
-              root.innerHTML = '<div style="color: red"><h4>Runtime Error</h4>' + err + '</div>'
-              console.error(err);
-            }
-          }, false);
-        </script>
-      </body>
-    </html>
-  `
 
   return (
     <div>
       <CodeEditor initialValue='// write your code here' onChange={(value) => setInput(value)} />
-      <textarea value={input} onChange={(e) => setInput(e.target.value)}></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <iframe title='preview' ref={iframeRef} sandbox='allow-scripts' srcDoc={iframeHTML} />
+      <Preview code={code} />
     </div>
   )
 }
