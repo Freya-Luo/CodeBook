@@ -2,6 +2,7 @@ import { useState } from 'react'
 import CodeEditor from './code-editor'
 import Preview from './preview'
 import Builder from '../builder'
+import ResizableWrapper from './resizable-wrapper'
 
 const CodeSession = () => {
   const [inputCode, setInputCode] = useState('')
@@ -13,13 +14,12 @@ const CodeSession = () => {
   }
 
   return (
-    <div>
-      <CodeEditor initialValue='// write your code here' onChange={(value) => setInputCode(value)} />
-      <div>
-        <button onClick={onClick}>Submit</button>
+    <ResizableWrapper direction='vertical'>
+      <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
+        <CodeEditor initialValue='// write your code here' onChange={(value) => setInputCode(value)} />
+        <Preview code={bundledCode} />
       </div>
-      <Preview code={bundledCode} />
-    </div>
+    </ResizableWrapper>
   )
 }
 

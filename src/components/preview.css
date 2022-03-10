@@ -1,0 +1,23 @@
+.preview-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.preview-wrapper iframe {
+  background-color: white;
+  height: 100%;
+}
+
+/* Tricky: put this shielding element on top of the preview component.
+* The drag events cannot be catched by the parent window if the cursor moves so fast  
+* that it falls into the iframe window area. Thus, adding this "after" sudo element when
+* dragging happens can make sure the drag events can be correctly catched. */
+.react-draggable-transparent-selection .preview-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+}
