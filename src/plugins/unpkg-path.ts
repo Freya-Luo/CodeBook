@@ -8,8 +8,11 @@
  */
 import * as esbuild from 'esbuild-wasm'
 
-// This function overwrites the ESBuild default onResolve() => find out the file path
-// The setup() is auto called by ESBuild with "build" arg  (represent the whole bundling process )
+/**
+ * This plugin overwrites the ESBuild default onResolve() => find out the file path.
+ * The setup() is auto called by ESBuild with "build" arg  (represent the whole bundling process)
+ * @returns customized plugin instance to construct modules' URL
+ */
 export const unpkgPathPlugin = () => {
   return {
     name: 'unpkg-path-plugin',

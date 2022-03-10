@@ -10,7 +10,11 @@ const cache = localforage.createInstance({
   name: 'pkg-cache',
 })
 
-// This function overwrites the ESBuild default default onLoad() => loading this file functions.
+/**
+ * This plugin overwrites the ESBuild default default onLoad() => loading this file functions.
+ * @param inputCode user inpu code string
+ * @returns customized plugin instance to fetch modules
+ */
 export const fetchFilePlugin = (inputCode: string) => {
   return {
     name: 'fetch-file-plugin',
