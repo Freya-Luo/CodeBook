@@ -16,7 +16,9 @@ const CodeSession = () => {
   return (
     <ResizableWrapper direction='vertical'>
       <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
-        <CodeEditor initialValue='// write your code here' onChange={(value) => setInputCode(value)} />
+        <ResizableWrapper direction='horizontal'>
+          <CodeEditor initialValue='// write your code here' onChange={(value) => setInputCode(value)} />
+        </ResizableWrapper>
         <Preview code={bundledCode} />
       </div>
     </ResizableWrapper>
