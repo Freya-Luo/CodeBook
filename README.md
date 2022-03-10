@@ -90,3 +90,4 @@
   - ✅tradeoff: still considered as secure -- as it's hard for `iframe` child window to reach out to the parent window
     - hard to set up event listeners onto parent
     - hard to read `cross-domain` disabled values
+      ![Diagram - Data Flow](./public/pics/msg-flow.png)

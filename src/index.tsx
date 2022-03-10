@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { useState, useEffect, useRef } from 'react'
 import { unpkgPathPlugin } from './plugins/unpkg-path'
 import { fetchFilePlugin } from './plugins/fetch-file'
+import CodeEditor from './components/code-editor'
 
 const App = () => {
   const [input, setInput] = useState('')
@@ -32,7 +33,6 @@ const App = () => {
     // get the builder (combined transpiler & bundler) from ESBuild
     const builder = serviceRef.current.build
     const res = await builder({
-      // {}
       entryPoints: ['index.js'],
       bundle: true,
       write: false,
@@ -72,11 +72,12 @@ const App = () => {
 
   return (
     <div>
+      <CodeEditor initialValue='// write your code here' onChange={(value) => setInput(value)} />
       <textarea value={input} onChange={(e) => setInput(e.target.value)}></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <iframe ref={iframeRef} sandbox='allow-scripts' srcDoc={iframeHTML} />
+      <iframe title='preview' ref={iframeRef} sandbox='allow-scripts' srcDoc={iframeHTML} />
     </div>
   )
 }
