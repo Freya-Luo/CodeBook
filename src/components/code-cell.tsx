@@ -3,16 +3,22 @@ import CodeEditor from './code-editor';
 import Preview from './preview';
 import Builder from '../builder';
 import ResizableWrapper from './resizable-wrapper';
+import { Cell } from '../state';
+import { useAction } from '../hooks/use-action';
 
-const CodeCell = () => {
-  const [inputCode, setInputCode] = useState('');
+interface CodeCellProps {
+  cell: Cell;
+}
+
+const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const [bundledCode, setBundledCode] = useState('');
   const [err, setErr] = useState('');
+  const { updateCell } = useAction();
 
   useEffect(() => {
     // avoid aggressive building process - debounce
     const timer = setTimeout(async () => {
-      const res = await Builder(inputCode);
+      const res = await Builder(cell.content);
       setBundledCode(res.code);
       setErr(res.err);
     }, 1000);
@@ -22,13 +28,13 @@ const CodeCell = () => {
     return function cleanup() {
       clearTimeout(timer);
     };
-  }, [inputCode]);
+  }, [cell.content]);
 
   return (
     <ResizableWrapper direction='vertical'>
       <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
         <ResizableWrapper direction='horizontal'>
-          <CodeEditor initialValue='// write your code here' onChange={(value) => setInputCode(value)} />
+          <CodeEditor initialValue={cell.content} onChange={(value) => updateCell(cell.id, value)} />
         </ResizableWrapper>
         <Preview code={bundledCode} bundleMsg={err} />
       </div>

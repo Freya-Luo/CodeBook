@@ -1,11 +1,16 @@
 import './md-editor.css';
 import MDEditor from '@uiw/react-md-editor';
 import { useState, useEffect, useRef } from 'react';
-
-const TextEditor: React.FC = () => {
+import { Cell } from '../state';
+import { useAction } from '../hooks/use-action';
+interface TextEditorpProps {
+  cell: Cell;
+}
+const TextEditor: React.FC<TextEditorpProps> = ({ cell }) => {
+  // keep the editing mode to be the local state
   const [editMode, setEditMode] = useState(false);
-  const [text, setText] = useState('# header');
   const editorRef = useRef<HTMLDivElement | null>(null);
+  const { updateCell } = useAction();
 
   useEffect(() => {
     const clickListener = (e: MouseEvent) => {
@@ -25,7 +30,7 @@ const TextEditor: React.FC = () => {
   if (editMode) {
     return (
       <div ref={editorRef} className='md-editor-wrapper'>
-        <MDEditor value={text} onChange={(value) => setText(value || '')} />
+        <MDEditor value={cell.content} onChange={(value) => updateCell(cell.id, value || '')} />
       </div>
     );
   }
@@ -34,7 +39,7 @@ const TextEditor: React.FC = () => {
     // using bulma css styles -- card & card-content class
     <div className='md-editor-wrapper card' onClick={() => setEditMode(true)}>
       <div className='card-content'>
-        <MDEditor.Markdown source={text} />
+        <MDEditor.Markdown source={cell.content || '### Click here to edit!'} />
       </div>
     </div>
   );

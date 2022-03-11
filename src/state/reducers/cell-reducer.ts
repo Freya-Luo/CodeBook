@@ -24,7 +24,7 @@ const initialState: CellState = {
  * clean and simple way as opposed to a large bundle of code that spreads the whole state first
  * and overwriting the old part in the state.
  */
-const reducer = produce((state: CellState = initialState, action: Action): CellState => {
+const CellReducer = produce((state: CellState = initialState, action: Action): CellState => {
   switch (action.type) {
     case ActionType.UPDATE_CELL:
       const { id, content } = action.payload;
@@ -71,4 +71,4 @@ const genId = (): string => {
   // 0-9 & a-z, using 36 as base to generate a really large number
   return Math.random().toString(36).substring(2, 5);
 };
-export default reducer;
+export default CellReducer;
