@@ -22,6 +22,11 @@ const ResizableWrapper: React.FC<ResizableWrapperProps> = ({ direction, children
       timer = setTimeout(() => {
         setInnerWidth(window.innerWidth)
         setInnerHeight(window.innerHeight)
+
+        // responsize bug fix
+        if (window.innerWidth * 0.6 < editorWidth) {
+          setEditorWidth(window.innerWidth * 0.6)
+        }
       }, 100)
     }
     window.addEventListener('resize', resizeListener)
@@ -30,7 +35,7 @@ const ResizableWrapper: React.FC<ResizableWrapperProps> = ({ direction, children
     return () => {
       window.removeEventListener('resize', resizeListener)
     }
-  }, [])
+  }, [editorWidth])
 
   let resizableProps: ResizableBoxProps
   // if the resizable box grows/shrinks horizontally

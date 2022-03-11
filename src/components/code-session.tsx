@@ -1,17 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CodeEditor from './code-editor'
 import Preview from './preview'
 import Builder from '../builder'
 import ResizableWrapper from './resizable-wrapper'
 
+// avoid aggressive building process - debounce
+let timer: any
 const CodeSession = () => {
   const [inputCode, setInputCode] = useState('')
   const [bundledCode, setBundledCode] = useState('')
 
-  const onClick = async () => {
-    const code = await Builder(inputCode)
-    setBundledCode(code)
-  }
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(async () => {
+      const code = await Builder(inputCode)
+      setBundledCode(code)
+    }, 1500)
+  }, [inputCode])
 
   return (
     <ResizableWrapper direction='vertical'>
