@@ -96,3 +96,15 @@
     - hard to read `cross-domain` disabled values
 
     ![Diagram - Data Flow](./public/pics/msg-flow.png)
+
+---
+
+##### D. Redux State Store
+
+- Cell (code / markdown cell)
+  - `loading: boolean`: whether fetch data
+  - `error: string | null`
+  - `order: string[]`: cell ids
+  - `orgs: {[id]: cell}`: object storing all cells
+- Builder
+  - `orgs: {[id]: cell}`: object storing each cell's builder

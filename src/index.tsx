@@ -1,13 +1,17 @@
 import 'bulmaswatch/slate/bulmaswatch.min.css'
 import ReactDOM from 'react-dom'
-import CodeSession from './components/code-session'
+import { Provider } from 'react-redux'
+import { store } from './state'
+import CodeCell from './components/code-cell'
 import TextEditor from './components/md-editor'
 
 const App = () => {
   return (
-    <div>
-      <TextEditor />
-    </div>
+    <Provider store={store}>
+      <div>
+        <TextEditor />
+      </div>
+    </Provider>
   )
 }
 

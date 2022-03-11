@@ -4,7 +4,7 @@ import Preview from './preview'
 import Builder from '../builder'
 import ResizableWrapper from './resizable-wrapper'
 
-const CodeSession = () => {
+const CodeCell = () => {
   const [inputCode, setInputCode] = useState('')
   const [bundledCode, setBundledCode] = useState('')
   const [err, setErr] = useState('')
@@ -36,4 +36,4 @@ const CodeSession = () => {
   )
 }
 
-export default CodeSession
+export default CodeCell
