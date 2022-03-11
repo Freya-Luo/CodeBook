@@ -1,0 +1,6 @@
+/* Solve 'title' css classname conflict in Bulma css and MDEditor css. */
+.w-md-editor .title {
+  line-height: unset;
+  font-size: unset;
+  font-weight: unset;
+}
