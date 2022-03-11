@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 
 const TextEditor: React.FC = () => {
   const [editMode, setEditMode] = useState(false)
+  const [text, setText] = useState('# header')
   const editorRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -20,17 +21,21 @@ const TextEditor: React.FC = () => {
     }
   }, [])
 
+  // if the editor is in the editing mode
   if (editMode) {
     return (
-      <div ref={editorRef}>
-        <MDEditor />
+      <div ref={editorRef} className='md-editor-wrapper'>
+        <MDEditor value={text} onChange={(value) => setText(value || '')} />
       </div>
     )
   }
-
+  // else if it is in the viewing mode
   return (
-    <div onClick={() => setEditMode(true)}>
-      <MDEditor.Markdown source='# jjjj' />
+    // using bulma css styles -- card & card-content class
+    <div className='md-editor-wrapper card' onClick={() => setEditMode(true)}>
+      <div className='card-content'>
+        <MDEditor.Markdown source={text} />
+      </div>
     </div>
   )
 }

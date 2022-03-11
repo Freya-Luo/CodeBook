@@ -4,3 +4,72 @@
   font-size: unset;
   font-weight: unset;
 }
+
+/* Solve 'ul' css conflict in Bulma css and MDEditor css. */
+.w-md-editor ul {
+  line-height: 1;
+}
+
+/* Restyling the resizing bar */
+.md-editor-wrapper .w-md-editor-bar svg {
+  display: none;
+}
+
+.md-editor-wrapper .w-md-editor-bar {
+  position: relative;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+  height: 11px;
+  width: 100%;
+  cursor: row-resize;
+  background-color: #37414b;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.md-editor-wrapper em {
+  font-style: italic;
+}
+
+.md-editor-wrapper .wmde-markdown hr {
+  border-top: 1px solid #dee5ed;
+}
+
+.md-editor-wrapper .wmde-markdown ol {
+  list-style: decimal;
+}
+
+/* Hide menu bar buttons to prevent accidental delete */
+.md-editor-wrapper .w-md-editor-show-live {
+  z-index: 20;
+}
+
+.md-editor-wrapper .w-md-editor-toolbar {
+  background-color: #37414b;
+  border-bottom: 1px solid gray;
+}
+
+.md-editor-wrapper .w-md-editor-toolbar li button {
+  color: #ddd9d9;
+}
+
+.md-editor-wrapper .w-md-editor-content {
+  background-color: #202123;
+}
+
+.md-editor-wrapper .w-md-editor,
+.md-editor-wrapper .w-md-editor .w-md-editor-text-pre {
+  color: #ddd9d9;
+}
+
+.md-editor-wrapper .w-md-editor-text-pre .bold,
+.md-editor-wrapper .w-md-editor-text-pre .title {
+  color: #ddd9d9 !important;
+}
+
+.md-editor-wrapper .token.list.punctuation {
+  background-color: unset;
+}
+
+.md-editor-wrapper {
+  color: #ddd9d9;
+}

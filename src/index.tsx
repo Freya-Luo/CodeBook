@@ -6,7 +6,6 @@ import TextEditor from './components/md-editor'
 const App = () => {
   return (
     <div>
-      {/* <CodeSession /> */}
       <TextEditor />
     </div>
   )
