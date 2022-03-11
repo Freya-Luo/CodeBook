@@ -4,20 +4,24 @@ import Preview from './preview'
 import Builder from '../builder'
 import ResizableWrapper from './resizable-wrapper'
 
-// avoid aggressive building process - debounce
-let timer: any
 const CodeSession = () => {
   const [inputCode, setInputCode] = useState('')
   const [bundledCode, setBundledCode] = useState('')
+  const [err, setErr] = useState('')
 
   useEffect(() => {
-    if (timer) {
+    // avoid aggressive building process - debounce
+    const timer = setTimeout(async () => {
+      const res = await Builder(inputCode)
+      setBundledCode(res.code)
+      setErr(res.err)
+    }, 1000)
+
+    // function will be called auto next time useEffect() is called
+    // cancel the previous setup timer
+    return function cleanup() {
       clearTimeout(timer)
     }
-    timer = setTimeout(async () => {
-      const code = await Builder(inputCode)
-      setBundledCode(code)
-    }, 1000)
   }, [inputCode])
 
   return (
@@ -26,7 +30,7 @@ const CodeSession = () => {
         <ResizableWrapper direction='horizontal'>
           <CodeEditor initialValue='// write your code here' onChange={(value) => setInputCode(value)} />
         </ResizableWrapper>
-        <Preview code={bundledCode} />
+        <Preview code={bundledCode} bundleMsg={err} />
       </div>
     </ResizableWrapper>
   )

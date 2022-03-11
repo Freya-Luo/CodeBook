@@ -24,3 +24,16 @@
   bottom: 0;
   opacity: 0;
 }
+
+.error {
+  position: absolute;
+  top: 17px;
+  left: 8px;
+  color: red;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.error h4 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}

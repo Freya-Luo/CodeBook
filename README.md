@@ -64,6 +64,8 @@
 - every time fetching pkgs, first check if files have already been cached
   ![Diagram - Cache NPM Pkgs](./public/pics/cache-pkgs.png)
 
+---
+
 ##### C. Code Execution
 
 - Issues
@@ -82,12 +84,15 @@
   - option 1 -> burdens the infrastructure setup, execute quickly
   - option 2 -> some features like `localStorage, Cookie, ...` are disabled but simple
 - **Tricky points**
+
   - use `srcDoc` instead of `src` to save extra requests
   - **apply `window.postMessage + eval(${code})`** to lightly enable cross-domain communication (directly execute code)
     - **as opposed to** the combination of `srcDoc = <script>${code}</script>` with just string literal (executed by `<script>` tag invocatoin)
       - `srcDoc` attribute may have length limitation
       - ❌pure string literal may have special chars that _need to be escaped_
   - ✅tradeoff: still considered as secure -- as it's hard for `iframe` child window to reach out to the parent window
+
     - hard to set up event listeners onto parent
     - hard to read `cross-domain` disabled values
-      ![Diagram - Data Flow](./public/pics/msg-flow.png)
+
+    ![Diagram - Data Flow](./public/pics/msg-flow.png)

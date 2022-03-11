@@ -2,6 +2,7 @@ import './preview.css'
 import { useEffect, useRef } from 'react'
 interface PreviewProps {
   code: string
+  bundleMsg: string
 }
 
 // generate iframe content locally
@@ -12,13 +13,23 @@ const iframeHTML = `
       <body>
         <div id="root"></div>
         <script>
+          const handleError = (err) => {
+            const root = document.querySelector('#root')
+            root.innerHTML = '<div style="color: red"><h4>Runtime Error</h4>' + err + '</div>'
+            console.error(err);
+          }
+
+          // handle asynchronous errors
+          window.addEventListener('error', (e) => {
+            e.preventDefault()
+            handleError(e.error)
+          })
+
           window.addEventListener('message', (e) => {
             try {
               eval(e.data)
             } catch (err) {
-              const root = document.querySelector('#root')
-              root.innerHTML = '<div style="color: red"><h4>Runtime Error</h4>' + err + '</div>'
-              console.error(err);
+              handleError(err)
             }
           }, false);
         </script>
@@ -26,7 +37,7 @@ const iframeHTML = `
     </html>
   `
 
-const Preview: React.FC<PreviewProps> = ({ code }) => {
+const Preview: React.FC<PreviewProps> = ({ code, bundleMsg }) => {
   const iframeRef = useRef<any>()
 
   useEffect(() => {
@@ -45,6 +56,12 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
 
   return (
     <div className='preview-wrapper'>
+      {bundleMsg && (
+        <div className='error'>
+          <h4>Bundling Error</h4>
+          {bundleMsg}
+        </div>
+      )}
       <iframe title='preview' ref={iframeRef} sandbox='allow-scripts' srcDoc={iframeHTML} />
     </div>
   )

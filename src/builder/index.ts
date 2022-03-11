@@ -22,18 +22,28 @@ const Builder = async (inputCode: string) => {
 
   // get the builder (combined transpiler & bundler) from ESBuild
   const builder = service.build
-  const res = await builder({
-    entryPoints: ['index.js'],
-    bundle: true,
-    write: false,
-    plugins: [unpkgPathPlugin(), fetchFilePlugin(inputCode)],
-    define: {
-      'process.env.NODE_ENV': '"production"', // to get the string 'production' not a var
-      global: 'window',
-    },
-  })
-  // return the transpiled and bundled code
-  return res.outputFiles[0].text
+  try {
+    const res = await builder({
+      entryPoints: ['index.js'],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin(), fetchFilePlugin(inputCode)],
+      define: {
+        'process.env.NODE_ENV': '"production"', // to get the string 'production' not a var
+        global: 'window',
+      },
+    })
+    // return the transpiled and bundled code
+    return {
+      code: res.outputFiles[0].text,
+      err: '',
+    }
+  } catch (error: any) {
+    return {
+      code: '',
+      err: error.message,
+    }
+  }
 }
 
 export default Builder
