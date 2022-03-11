@@ -17,7 +17,7 @@ const CodeSession = () => {
     timer = setTimeout(async () => {
       const code = await Builder(inputCode)
       setBundledCode(code)
-    }, 1500)
+    }, 1000)
   }, [inputCode])
 
   return (

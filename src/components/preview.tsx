@@ -30,13 +30,17 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
   const iframeRef = useRef<any>()
 
   useEffect(() => {
-    // dump all previous execution variables and changes
+    // dump all previous execution variables and changes (whole HTML goes away)
     // and get a newly fresh iframe environment
     iframeRef.current.srcdoc = iframeHTML
 
     // parent window (React App) emit user input code to the iframe (pass down)
+    // targetWindow.postMeassage()
     // * for allowing for any domain (still relative secure as stated tradeoff in README)
-    iframeRef.current.contentWindow.postMessage(code, '*')
+    // Trick: Adding a few miliseconds to make sure iframe has already setup the new event listener
+    setTimeout(() => {
+      iframeRef.current.contentWindow.postMessage(code, '*')
+    }, 30)
   }, [code])
 
   return (
