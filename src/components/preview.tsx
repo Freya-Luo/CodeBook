@@ -1,8 +1,8 @@
-import './preview.css'
-import { useEffect, useRef } from 'react'
+import './preview.css';
+import { useEffect, useRef } from 'react';
 interface PreviewProps {
-  code: string
-  bundleMsg: string
+  code: string;
+  bundleMsg: string;
 }
 
 // generate iframe content locally
@@ -35,24 +35,24 @@ const iframeHTML = `
         </script>
       </body>
     </html>
-  `
+  `;
 
 const Preview: React.FC<PreviewProps> = ({ code, bundleMsg }) => {
-  const iframeRef = useRef<any>()
+  const iframeRef = useRef<any>();
 
   useEffect(() => {
     // dump all previous execution variables and changes (whole HTML goes away)
     // and get a newly fresh iframe environment
-    iframeRef.current.srcdoc = iframeHTML
+    iframeRef.current.srcdoc = iframeHTML;
 
     // parent window (React App) emit user input code to the iframe (pass down)
     // targetWindow.postMeassage()
     // * for allowing for any domain (still relative secure as stated tradeoff in README)
     // Trick: Adding a few miliseconds to make sure iframe has already setup the new event listener
     setTimeout(() => {
-      iframeRef.current.contentWindow.postMessage(code, '*')
-    }, 30)
-  }, [code])
+      iframeRef.current.contentWindow.postMessage(code, '*');
+    }, 30);
+  }, [code]);
 
   return (
     <div className='preview-wrapper'>
@@ -64,7 +64,7 @@ const Preview: React.FC<PreviewProps> = ({ code, bundleMsg }) => {
       )}
       <iframe title='preview' ref={iframeRef} sandbox='allow-scripts' srcDoc={iframeHTML} />
     </div>
-  )
-}
+  );
+};
 
-export default Preview
+export default Preview;

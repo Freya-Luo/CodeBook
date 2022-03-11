@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react'
-import CodeEditor from './code-editor'
-import Preview from './preview'
-import Builder from '../builder'
-import ResizableWrapper from './resizable-wrapper'
+import { useState, useEffect } from 'react';
+import CodeEditor from './code-editor';
+import Preview from './preview';
+import Builder from '../builder';
+import ResizableWrapper from './resizable-wrapper';
 
 const CodeCell = () => {
-  const [inputCode, setInputCode] = useState('')
-  const [bundledCode, setBundledCode] = useState('')
-  const [err, setErr] = useState('')
+  const [inputCode, setInputCode] = useState('');
+  const [bundledCode, setBundledCode] = useState('');
+  const [err, setErr] = useState('');
 
   useEffect(() => {
     // avoid aggressive building process - debounce
     const timer = setTimeout(async () => {
-      const res = await Builder(inputCode)
-      setBundledCode(res.code)
-      setErr(res.err)
-    }, 1000)
+      const res = await Builder(inputCode);
+      setBundledCode(res.code);
+      setErr(res.err);
+    }, 1000);
 
     // function will be called auto next time useEffect() is called
     // cancel the previous setup timer
     return function cleanup() {
-      clearTimeout(timer)
-    }
-  }, [inputCode])
+      clearTimeout(timer);
+    };
+  }, [inputCode]);
 
   return (
     <ResizableWrapper direction='vertical'>
@@ -33,7 +33,7 @@ const CodeCell = () => {
         <Preview code={bundledCode} bundleMsg={err} />
       </div>
     </ResizableWrapper>
-  )
-}
+  );
+};
 
-export default CodeCell
+export default CodeCell;

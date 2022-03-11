@@ -1,25 +1,25 @@
-import './md-editor.css'
-import MDEditor from '@uiw/react-md-editor'
-import { useState, useEffect, useRef } from 'react'
+import './md-editor.css';
+import MDEditor from '@uiw/react-md-editor';
+import { useState, useEffect, useRef } from 'react';
 
 const TextEditor: React.FC = () => {
-  const [editMode, setEditMode] = useState(false)
-  const [text, setText] = useState('# header')
-  const editorRef = useRef<HTMLDivElement | null>(null)
+  const [editMode, setEditMode] = useState(false);
+  const [text, setText] = useState('# header');
+  const editorRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const clickListener = (e: MouseEvent) => {
       if (editorRef.current && e.target && editorRef.current.contains(e.target as Node)) {
-        return
+        return;
       }
-      setEditMode(false)
-    }
-    document.addEventListener('click', clickListener, { capture: true })
+      setEditMode(false);
+    };
+    document.addEventListener('click', clickListener, { capture: true });
 
     return () => {
-      document.removeEventListener('click', clickListener, { capture: true })
-    }
-  }, [])
+      document.removeEventListener('click', clickListener, { capture: true });
+    };
+  }, []);
 
   // if the editor is in the editing mode
   if (editMode) {
@@ -27,7 +27,7 @@ const TextEditor: React.FC = () => {
       <div ref={editorRef} className='md-editor-wrapper'>
         <MDEditor value={text} onChange={(value) => setText(value || '')} />
       </div>
-    )
+    );
   }
   // else if it is in the viewing mode
   return (
@@ -37,7 +37,7 @@ const TextEditor: React.FC = () => {
         <MDEditor.Markdown source={text} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TextEditor
+export default TextEditor;

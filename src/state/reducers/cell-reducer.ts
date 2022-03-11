@@ -20,7 +20,9 @@ const initialState: CellState = {
 };
 
 /**
- *
+ * Wrapping the reducer function with "produce", we can safely mutate the draft state in a much
+ * clean and simple way as opposed to a large bundle of code that spreads the whole state first
+ * and overwriting the old part in the state.
  */
 const reducer = produce((state: CellState = initialState, action: Action): CellState => {
   switch (action.type) {
@@ -50,7 +52,7 @@ const reducer = produce((state: CellState = initialState, action: Action): CellS
         cellType: action.payload.cellType,
         content: '',
       };
-
+      // keep the new cell in the organization list
       state.orgs[newCell.id] = newCell;
       const index = state.order.findIndex((cellId) => cellId === action.payload.id);
       // if id is 'null', just push the id to the end of the order list
