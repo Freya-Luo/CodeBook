@@ -1,5 +1,40 @@
+.preview-wrapper-background {
+  height: 100%;
+  flex-grow: 1;
+  background-color: white;
+}
 .code-cell-inner-wrapper {
   height: calc(100% - 10px);
   display: flex;
   flex-direction: row;
+}
+
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-grow: 1;
+  background-color: white;
+  padding-left: 10%;
+  padding-right: 10%;
+  animation: fade-in 1s;
+}
+
+/**
+ * Using animation to make a good guess of the average building duration.
+ * For any code execution building (except import pkgs), .7s is a great amount
+ * to avoid the flash of the progress bar among each code building intervals.
+*/
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

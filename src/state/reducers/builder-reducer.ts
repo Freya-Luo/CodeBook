@@ -4,11 +4,11 @@ import { Action } from '../actions';
 import { Builder } from '../builder';
 
 /**
- * undefined: !! As BuilderState is a derived state of CellState, at the very first
- * beginning of the rendering process of the React App, no cells are rendered, which will
- * make the value of key "id" to be undefined.
+ * undefined: !! As 2 cell creation actions are dispatched initially in store.ts,
+ * at the very first beginning of the rendering process, no actions related to building
+ * process are dispatched. ("action.type" is unknown as in the parameter => BuilderState undefined)
  *
- * Explicitly defined this type to enable TS type check to handle the crash cases.
+ * Explicitly defined this type to enable TS type check to handle the crashing cases.
  */
 interface BuilderState {
   [id: string]: Builder | undefined;
@@ -33,6 +33,7 @@ const BuilderReducer = produce((state: BuilderState = initialState, action: Acti
       };
       return state;
     default:
+      console.log(action);
       return state;
   }
 });
