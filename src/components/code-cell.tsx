@@ -1,3 +1,4 @@
+import './code-cell.css';
 import { useState, useEffect } from 'react';
 import CodeEditor from './code-editor';
 import Preview from './preview';
@@ -32,7 +33,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
   return (
     <ResizableWrapper direction='vertical'>
-      <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
+      <div className='code-cell-inner-wrapper'>
         <ResizableWrapper direction='horizontal'>
           <CodeEditor initialValue={cell.content} onChange={(value) => updateCell(cell.id, value)} />
         </ResizableWrapper>

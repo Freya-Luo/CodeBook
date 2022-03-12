@@ -46,7 +46,7 @@ const CellReducer = produce((state: CellState = initialState, action: Action): C
       delete state.orgs[action.payload]; // delete specific cell
       state.order = state.order.filter((id) => id !== action.payload); // delete the cell in the order list
       return state;
-    case ActionType.INSERT_CELL_BEFORE:
+    case ActionType.INSERT_CELL_AFTER:
       const newCell: Cell = {
         id: genId(),
         cellType: action.payload.cellType,
@@ -55,11 +55,11 @@ const CellReducer = produce((state: CellState = initialState, action: Action): C
       // keep the new cell in the organization list
       state.orgs[newCell.id] = newCell;
       const index = state.order.findIndex((cellId) => cellId === action.payload.id);
-      // if id is 'null', just push the id to the end of the order list
+      // if id is 'null', just push the id to the beginning of the order list
       if (index === -1) {
-        state.order.push(newCell.id);
+        state.order.unshift(newCell.id);
       } else {
-        state.order.splice(index, 0, newCell.id);
+        state.order.splice(index + 1, 0, newCell.id);
       }
       return state;
     default:

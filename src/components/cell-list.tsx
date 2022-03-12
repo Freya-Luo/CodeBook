@@ -11,15 +11,15 @@ const CellList: React.FC = () => {
   // give a key prop when looping items
   const editorCells = cells.map((cell) => (
     <Fragment key={cell.id}>
-      <AddCellBar id={cell.id} />
       <CellListItem cell={cell} />
+      <AddCellBar id={cell.id} />
     </Fragment>
   ));
 
   return (
     <div>
-      {editorCells}
       <AddCellBar id={null} setVisibility={cells.length === 0}></AddCellBar>
+      {editorCells}
     </div>
   );
 };
