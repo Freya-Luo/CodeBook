@@ -33,7 +33,6 @@ const BuilderReducer = produce((state: BuilderState = initialState, action: Acti
       };
       return state;
     default:
-      console.log(action);
       return state;
   }
 });

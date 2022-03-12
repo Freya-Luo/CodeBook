@@ -1,8 +1,8 @@
-import * as esbuild from 'esbuild-wasm'
-import { unpkgPathPlugin } from './plugins/unpkg-path'
-import { fetchFilePlugin } from './plugins/fetch-file'
+import * as esbuild from 'esbuild-wasm';
+import { unpkgPathPlugin } from './plugins/unpkg-path';
+import { fetchFilePlugin } from './plugins/fetch-file';
 
-let service: esbuild.Service
+let service: esbuild.Service;
 
 /**
  * This function works as a builder (transpiles and bundles) of the input raw code.
@@ -17,11 +17,11 @@ const Builder = async (inputCode: string) => {
     service = await esbuild.startService({
       worker: true,
       wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
-    })
+    });
   }
 
   // get the builder (combined transpiler & bundler) from ESBuild
-  const builder = service.build
+  const builder = service.build;
   try {
     const res = await builder({
       entryPoints: ['index.js'],
@@ -32,18 +32,20 @@ const Builder = async (inputCode: string) => {
         'process.env.NODE_ENV': '"production"', // to get the string 'production' not a var
         global: 'window',
       },
-    })
+      jsxFactory: '__React__.createElement',
+      jsxFragment: '__React__.Fragment',
+    });
     // return the transpiled and bundled code
     return {
       code: res.outputFiles[0].text,
       err: '',
-    }
+    };
   } catch (error: any) {
     return {
       code: '',
       err: error.message,
-    }
+    };
   }
-}
+};
 
-export default Builder
+export default Builder;
