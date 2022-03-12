@@ -4,7 +4,7 @@ import CellListItem from './cell-list-item';
 import AddCellBar from './add-cell-bar';
 
 const CellList: React.FC = () => {
-  const cells = useTypedSelector(({ cell: { order, orgs } }) => {
+  const cells = useTypedSelector(({ cells: { order, orgs } }) => {
     return order.map((cellId) => orgs[cellId]);
   });
 

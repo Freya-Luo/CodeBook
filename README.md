@@ -90,7 +90,7 @@
     - **as opposed to** the combination of `srcDoc = <script>${code}</script>` with just string literal (executed by `<script>` tag invocatoin)
       - `srcDoc` attribute may have length limitation
       - ❌pure string literal may have special chars that _need to be escaped_
-  - ✅tradeoff: still considered as secure -- as it's hard for `iframe` child window to reach out to the parent window
+  - ✅ **[Tradeoff]**: still considered as secure -- as it's hard for `iframe` child window to reach out to the parent window
 
     - hard to set up event listeners onto parent
     - hard to read `cross-domain` disabled values
@@ -108,3 +108,10 @@
   - `orgs: {[id]: cell}`: object storing all cells
 - Builder
   - `orgs: {[id]: cell}`: object storing each cell's builder
+- **[Tradeoff]**
+
+  - `Builder` is associated with each `Cell`, which can be taken as <u>a derived state</u> of `Cell`
+    - Typically, this is when we should use `useSelector()` to handle the derived state
+  - BUT! this process is **asynchronous** => better not use `useSelector()` (may try `useAsyncSelector` from 3rd-party pkg)
+
+  ![Diagram - Redux Store](./public/pics/redux-store.png)

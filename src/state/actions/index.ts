@@ -31,4 +31,28 @@ export interface InsertCellAfterAction {
   };
 }
 
-export type Action = UpdateCellAction | MoveCellAction | DeleteCellAction | InsertCellAfterAction;
+export interface BuildStartAction {
+  type: ActionType.BUILD_START;
+  payload: {
+    cellId: string; // cell id
+  };
+}
+
+export interface BuildDoneAction {
+  type: ActionType.BUILD_DONE;
+  payload: {
+    cellId: string;
+    output: {
+      code: string;
+      err: string;
+    };
+  };
+}
+
+export type Action =
+  | UpdateCellAction
+  | MoveCellAction
+  | DeleteCellAction
+  | InsertCellAfterAction
+  | BuildStartAction
+  | BuildDoneAction;

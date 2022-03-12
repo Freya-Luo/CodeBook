@@ -17,3 +17,10 @@
 .editor-wrapper:hover .button-format {
   opacity: 1;
 }
+
+.monaco-editor,
+.monaco-editor-background,
+.monaco-editor .inputarea.ime-input,
+.monaco-editor .margin {
+  background-color: #242425 !important;
+}

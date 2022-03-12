@@ -71,4 +71,5 @@ const genId = (): string => {
   // 0-9 & a-z, using 36 as base to generate a really large number
   return Math.random().toString(36).substring(2, 5);
 };
+
 export default CellReducer;
