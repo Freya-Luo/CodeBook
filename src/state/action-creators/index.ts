@@ -51,18 +51,21 @@ export const insertCellAfter = (id: string | null, cellType: CellType): InsertCe
   };
 };
 
+// using Thunk to support action creators return a function instead of just an Action object
 export const createBuilder = (cellId: string, inputCode: string) => {
   return async (dispatch: Dispatch<Action>) => {
-    dispatch({
+    const buildStart: BuildStartAction = {
       type: ActionType.BUILD_START,
       payload: {
         cellId,
       },
-    });
+    };
+    dispatch(buildStart); // send syn start building action
 
+    // actually asyn processing transpiling and bundling
     const { code, err } = await Builder(inputCode);
 
-    dispatch({
+    const buildDone: BuildDoneAction = {
       type: ActionType.BUILD_DONE,
       payload: {
         cellId,
@@ -71,6 +74,7 @@ export const createBuilder = (cellId: string, inputCode: string) => {
           err,
         },
       },
-    });
+    };
+    dispatch(buildDone); // send syn building done action
   };
 };

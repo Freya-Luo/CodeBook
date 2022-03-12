@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { actionCreators } from '../state';
 import { bindActionCreators } from 'redux';
+import { useMemo } from 'react';
 
 /**
  * This is a hook that binds dispatch to the action creators so that
@@ -14,5 +15,12 @@ import { bindActionCreators } from 'redux';
  */
 export const useAction = () => {
   const dispatch = useDispatch();
-  return bindActionCreators(actionCreators, dispatch);
+
+  // dispatch is safe to use as this reference will be stable as long as the same store instance is
+  // being passed to the <Provider />
+  // For each code cell, we do not want to have multiple Builders for every re-render process,
+  // so using useMemo() to bind the actionCreators only 1 single time and generate only 1 Builder in code-cell.tsx.
+  return useMemo(() => {
+    return bindActionCreators(actionCreators, dispatch);
+  }, [dispatch]);
 };

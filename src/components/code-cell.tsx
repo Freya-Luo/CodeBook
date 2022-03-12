@@ -1,8 +1,7 @@
 import './code-cell.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import CodeEditor from './code-editor';
 import Preview from './preview';
-import Builder from '../builder';
 import { useTypedSelector } from '../hooks/use-typed-selector';
 import ResizableWrapper from './resizable-wrapper';
 import { Cell } from '../state';
@@ -19,7 +18,6 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   useEffect(() => {
     // avoid aggressive building process - debounce
     const timer = setTimeout(async () => {
-      const res = await Builder(cell.content);
       createBuilder(cell.id, cell.content);
     }, 1000);
 
@@ -28,7 +26,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     return function cleanup() {
       clearTimeout(timer);
     };
-  }, [cell.id, cell.content]);
+  }, [cell.id, cell.content, createBuilder]);
 
   return (
     <ResizableWrapper direction='vertical'>
@@ -36,7 +34,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
         <ResizableWrapper direction='horizontal'>
           <CodeEditor initialValue={cell.content} onChange={(value) => updateCell(cell.id, value)} />
         </ResizableWrapper>
-        {/* <Preview code={bundledCode} bundleMsg={err} /> */}
+        {builderState && <Preview code={builderState.code} bundleMsg={builderState.err} />}
       </div>
     </ResizableWrapper>
   );

@@ -1,7 +1,7 @@
 /**
  * Interface that describes an individual builder associated with a cell.
  */
-export default interface Builder {
+export interface Builder {
   loading: boolean;
   code: string;
   err: string;
