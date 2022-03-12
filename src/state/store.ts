@@ -20,19 +20,3 @@ store.dispatch({
     cellType: 'MARKDOWN',
   },
 });
-
-store.dispatch({
-  type: ActionType.INSERT_CELL_BEFORE,
-  payload: {
-    id: null,
-    cellType: 'CODE',
-  },
-});
-
-store.dispatch({
-  type: ActionType.INSERT_CELL_BEFORE,
-  payload: {
-    id: null,
-    cellType: 'MARKDOWN',
-  },
-});

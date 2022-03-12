@@ -1,0 +1,37 @@
+.add-cell-bar-wrapper {
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.add-cell-bar-wrapper:hover {
+  opacity: 1;
+}
+
+.add-cell-bar-wrapper.set-visible {
+  opacity: 1;
+}
+
+.add-cell-bar-wrapper .buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.add-cell-bar-wrapper .buttons button {
+  margin: 0 60px;
+}
+
+.add-cell-divider {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  right: 20px;
+  left: 20px;
+  border-bottom: 1.5px solid gray;
+  z-index: -1;
+}
+
+.add-cell-bar-wrapper .button.is-small {
+  font-size: 0.7rem;
+  font-weight: 500;
+}

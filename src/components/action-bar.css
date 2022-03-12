@@ -11,6 +11,6 @@
   opacity: 1;
 }
 
-.button.is-small {
+.action-bar .button.is-small {
   font-size: 0.65rem;
 }

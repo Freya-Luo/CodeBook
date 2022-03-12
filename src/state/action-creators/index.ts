@@ -33,7 +33,7 @@ export const deleteCell = (id: string): DeleteCellAction => {
     payload: id,
   };
 };
-export const insertCellBefore = (id: string, cellType: CellType): InsertCellBeforeAction => {
+export const insertCellBefore = (id: string | null, cellType: CellType): InsertCellBeforeAction => {
   return {
     type: ActionType.INSERT_CELL_BEFORE,
     payload: {
