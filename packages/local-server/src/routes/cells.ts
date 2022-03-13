@@ -11,6 +11,7 @@ interface Cell {
 export const cellRouter = (filename: string, dir: string) => {
   const router = express.Router();
   const filepath = path.join(dir, filename);
+  router.use(express.json()); // add body-parsing middleware to get request.body
 
   /**
    * This router provides an API that gets the file and extract a list of cells out of it.
@@ -25,6 +26,9 @@ export const cellRouter = (filename: string, dir: string) => {
     } catch (err: any) {
       if (err.code !== 'ENOENT') {
         console.log(err.message);
+      } else {
+        await fs.writeFile(filepath, '[]', 'utf-8');
+        response.send([]);
       }
     }
   });
