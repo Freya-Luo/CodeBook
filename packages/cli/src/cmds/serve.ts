@@ -2,6 +2,9 @@ import path from 'path';
 import { Command } from 'commander';
 import { runServe } from 'local-server';
 
+// right before deploying, set the NODE_ENV to 'production'
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const serveCmd = new Command()
   .command('serve [filename]')
   .description('start the code book application')
@@ -11,7 +14,7 @@ export const serveCmd = new Command()
     // catch any possible errors
     // listening on a port is an asyn operation
     try {
-      await runServe(parseInt(options.port), path.basename(filename), dir);
+      await runServe(parseInt(options.port), path.basename(filename), dir, !isProduction);
       console.log(`
         Opened ${filename}. Run on Local: http://localhost:${options.port}.
       `);
