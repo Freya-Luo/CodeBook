@@ -8,11 +8,14 @@ import {
   Direction,
   BuildStartAction,
   BuildDoneAction,
+  FetchCellsAction,
+  FetchCellsSuccessAction,
+  FetchCellsFailAction,
 } from '../actions';
-
-import { CellType } from '../cell';
+import { Cell, CellType } from '../cell';
 import { Dispatch } from 'react';
 import Builder from '../../builder';
+import axios from 'axios';
 
 export const updateCell = (id: string, content: string): UpdateCellAction => {
   return {
@@ -76,5 +79,30 @@ export const createBuilder = (cellId: string, inputCode: string) => {
       },
     };
     dispatch(buildDone); // send syn building done action
+  };
+};
+
+export const fetchCells = () => {
+  return async (dispatch: Dispatch<Action>) => {
+    const fetchCells: FetchCellsAction = {
+      type: ActionType.FETCH_CELLS,
+    };
+    dispatch(fetchCells);
+
+    try {
+      const { data }: { data: Cell[] } = await axios.get('/cells');
+
+      const fetchCellsSuccess: FetchCellsSuccessAction = {
+        type: ActionType.FETCH_CELLS_SUCCESS,
+        payload: data,
+      };
+      dispatch(fetchCellsSuccess);
+    } catch (err: any) {
+      const fetchCellsFail: FetchCellsFailAction = {
+        type: ActionType.FETCH_CELLS_FAIL,
+        payload: err.message,
+      };
+      dispatch(fetchCellsFail);
+    }
   };
 };
