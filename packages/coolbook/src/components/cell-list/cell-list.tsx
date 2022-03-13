@@ -1,13 +1,20 @@
 import './cell-list.css';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useTypedSelector } from '../../hooks/use-typed-selector';
 import CellListItem from './cell-list-item/cell-list-item';
 import AddCellBar from '../add-cell-bar/add-cell-bar';
+import { useAction } from '../../hooks/use-action';
 
 const CellList: React.FC = () => {
   const cells = useTypedSelector(({ cells: { order, orgs } }) => {
     return order.map((cellId) => orgs[cellId]);
   });
+  const { fetchCells } = useAction();
+
+  useEffect(() => {
+    fetchCells(); // initially, store the Cell[] info to the store "cells" state
+    // eslint-disable-next-line
+  }, []);
 
   // give a key prop when looping items
   const editorCells = cells.map((cell) => (

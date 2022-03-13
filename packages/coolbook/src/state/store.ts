@@ -1,22 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
-import { ActionType } from './action-types';
+import { updateCellsMiddleware } from './middlewares/update-cells-middleware';
 
-export const store = createStore(reducers, {}, applyMiddleware(thunk));
-
-store.dispatch({
-  type: ActionType.INSERT_CELL_AFTER,
-  payload: {
-    id: null,
-    cellType: 'CODE',
-  },
-});
-
-store.dispatch({
-  type: ActionType.INSERT_CELL_AFTER,
-  payload: {
-    id: null,
-    cellType: 'MARKDOWN',
-  },
-});
+export const store = createStore(reducers, {}, applyMiddleware(thunk, updateCellsMiddleware));
