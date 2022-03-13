@@ -11,11 +11,13 @@ import {
   FetchCellsAction,
   FetchCellsSuccessAction,
   FetchCellsFailAction,
+  UpdateCellsFailAction,
 } from '../actions';
 import { Cell, CellType } from '../cell';
 import { Dispatch } from 'react';
 import Builder from '../../builder';
 import axios from 'axios';
+import { RootState } from '../reducers';
 
 export const updateCell = (id: string, content: string): UpdateCellAction => {
   return {
@@ -103,6 +105,26 @@ export const fetchCells = () => {
         payload: err.message,
       };
       dispatch(fetchCellsFail);
+    }
+  };
+};
+
+export const updateCells = () => {
+  return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
+    const {
+      cells: { orgs, order },
+    } = getState();
+
+    const updatedCells = order.map((id) => orgs[id]);
+    try {
+      // follow the same interface defined in  routes/cells.ts
+      await axios.post('/cells', { cells: updatedCells });
+    } catch (err: any) {
+      const updateCellsFail: UpdateCellsFailAction = {
+        type: ActionType.UPDATE_CELLS_FAIL,
+        payload: err.message,
+      };
+      dispatch(updateCellsFail);
     }
   };
 };

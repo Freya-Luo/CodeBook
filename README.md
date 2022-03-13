@@ -48,7 +48,7 @@
       - so for any developer, just run the infrastructure and use the tool
   - Conclusion - using **Local Design** - in addition, using `ESBuild` instead of `Webpack` as it cannot be used in the browser - `ESBuild` supports in-browser transpiling and bundling - way much faster (written as Go underneath, translate JS into web assembly binary)
 
-    ![Diagram - Fetch NPM Pkgs](./packages/local-app/public/pics/fetch-npm-pkgs.png)
+    ![Diagram - Fetch NPM Pkgs](./packages/coolbook/public/pics/fetch-npm-pkgs.png)
 
 - Issuse with _`CSS` files_
   - as we do not write the output to some files
@@ -62,7 +62,7 @@
 ##### B. Caching packages
 
 - every time fetching pkgs, first check if files have already been cached
-  ![Diagram - Cache NPM Pkgs](./packages/local-app/public/pics/cache-pkgs.png)
+  ![Diagram - Cache NPM Pkgs](./packages/coolbook/public/pics/cache-pkgs.png)
 
 ---
 
@@ -95,7 +95,7 @@
     - hard to set up event listeners onto parent
     - hard to read `cross-domain` disabled values
 
-    ![Diagram - Data Flow](./packages/local-app/public/pics/msg-flow.png)
+    ![Diagram - Data Flow](./packages/coolbook/public/pics/msg-flow.png)
 
 ---
 
@@ -114,7 +114,7 @@
     - Typically, this is when we should use `useSelector()` to handle the derived state
   - BUT! this process is **asynchronous** => better not use `useSelector()` (may try `useAsyncSelector` from 3rd-party pkg)
 
-  ![Diagram - Redux Store](./packages/local-app/public/pics/redux-store.png)
+  ![Diagram - Redux Store](./packages/coolbook/public/pics/redux-store.png)
 
 ---
 

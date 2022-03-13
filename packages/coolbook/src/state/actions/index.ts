@@ -63,6 +63,11 @@ export interface FetchCellsFailAction {
   payload: string;
 }
 
+export interface UpdateCellsFailAction {
+  type: ActionType.UPDATE_CELLS_FAIL;
+  payload: string;
+}
+
 export type Action =
   | UpdateCellAction
   | MoveCellAction
@@ -72,4 +77,5 @@ export type Action =
   | BuildDoneAction
   | FetchCellsAction
   | FetchCellsSuccessAction
-  | FetchCellsFailAction;
+  | FetchCellsFailAction
+  | UpdateCellsFailAction;
