@@ -6,7 +6,17 @@ export const serveCmd = new Command()
   .command('serve [filename]')
   .description('start the code book application')
   .option('-p, --port <number>', 'port to run the server on', '8017')
-  .action((filename = 'coolbook.js', options: { port: string }) => {
+  .action(async (filename = 'coolbook.js', options: { port: string }) => {
     const dir = path.join(process.cwd(), path.dirname(filename));
-    runServe(parseInt(options.port), path.basename(filename), dir);
+    // catch any possible errors
+    // listening on a port is an asyn operation
+    try {
+      await runServe(parseInt(options.port), path.basename(filename), dir);
+      console.log(`
+        Opened ${filename}. Run on Local: http://localhost:${options.port}.
+      `);
+    } catch (err: any) {
+      console.log(err.message);
+      process.exit(1);
+    }
   });

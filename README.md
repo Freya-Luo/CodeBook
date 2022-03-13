@@ -48,7 +48,7 @@
       - so for any developer, just run the infrastructure and use the tool
   - Conclusion - using **Local Design** - in addition, using `ESBuild` instead of `Webpack` as it cannot be used in the browser - `ESBuild` supports in-browser transpiling and bundling - way much faster (written as Go underneath, translate JS into web assembly binary)
 
-    ![Diagram - Fetch NPM Pkgs](./public/pics/fetch-npm-pkgs.png)
+    ![Diagram - Fetch NPM Pkgs](./packages/local-app/public/pics/fetch-npm-pkgs.png)
 
 - Issuse with _`CSS` files_
   - as we do not write the output to some files
@@ -62,7 +62,7 @@
 ##### B. Caching packages
 
 - every time fetching pkgs, first check if files have already been cached
-  ![Diagram - Cache NPM Pkgs](./public/pics/cache-pkgs.png)
+  ![Diagram - Cache NPM Pkgs](./packages/local-app/public/pics/cache-pkgs.png)
 
 ---
 
@@ -95,7 +95,7 @@
     - hard to set up event listeners onto parent
     - hard to read `cross-domain` disabled values
 
-    ![Diagram - Data Flow](./public/pics/msg-flow.png)
+    ![Diagram - Data Flow](./packages/local-app/public/pics/msg-flow.png)
 
 ---
 
@@ -114,8 +114,25 @@
     - Typically, this is when we should use `useSelector()` to handle the derived state
   - BUT! this process is **asynchronous** => better not use `useSelector()` (may try `useAsyncSelector` from 3rd-party pkg)
 
-  ![Diagram - Redux Store](./public/pics/redux-store.png)
+  ![Diagram - Redux Store](./packages/local-app/public/pics/redux-store.png)
 
-  ### When things become larger...
+---
 
-  - Package-based development
+### When things become larger...
+
+- Package-based development
+  - CLI: start up the local-server API
+  - Local-server Express API: serve up the React App & save/load editor cells from a file
+    - **`simulation of the production env`**
+    - send the **built production** files of the React App to the browser -- `dist/*`
+    - **fetch (GET)** editor cells info from the file and send them back `filename from CLI`
+    - **store/update (POST)** the cells info back to the file
+  - React App: make the production assets available to the local API
+- tool: `Lerna`
+  - WHY? avoid republishing packages to NPM registry and outsourcing them (new versions) again
+    - `leran` sets up a link from `node_modules/` over to the copy of the package on the local machine
+    - changes in the dependent package will be directly reflected in the current package
+  ###### Reasoning
+  - each package can easily specify another as a dependency
+  - similar logic can be shared among different packages
+    - can extract logic and outsource it
