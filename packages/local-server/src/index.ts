@@ -5,7 +5,11 @@ import path from 'path';
 
 export const runServe = (port: number, filename: string, dir: string, isDevelopment: boolean) => {
   const app = express();
-  // load up the React App
+
+  // build up the router for fetching and updating files that store the cells info
+  app.use(cellRouter(filename, dir));
+
+  // default request to load up the React App (if no router matches, fall back here)
   /**
    * Serve the static built react project by linking with lerna.
    * "../node_modules/coolbook/build" is a shortcut/symbolic link (not the real
@@ -19,7 +23,7 @@ export const runServe = (port: number, filename: string, dir: string, isDevelopm
     const pkgPath = require.resolve('coolbook/build/index.html');
     app.use(express.static(path.dirname(pkgPath)));
   } else {
-    // default request navigating to the local react app in the active development env
+    // navigate to the local react app in the active development env
     // using proxy (creat-react-app server running)
     app.use(
       createProxyMiddleware({
@@ -29,8 +33,6 @@ export const runServe = (port: number, filename: string, dir: string, isDevelopm
       })
     );
   }
-  // build up the router for fetching and updating files that store the cells info
-  app.use(cellRouter(filename, dir));
 
   return new Promise<void>((resolve, reject) => {
     app
