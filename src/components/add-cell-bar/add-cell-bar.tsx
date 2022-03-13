@@ -1,5 +1,5 @@
 import './add-cell-bar.css';
-import { useAction } from '../hooks/use-action';
+import { useAction } from '../../hooks/use-action';
 
 interface AddCellBarProps {
   id: string | null; // cell id before this add-cell-bar

@@ -1,12 +1,12 @@
 import './code-cell.css';
 import { useEffect } from 'react';
-import CodeEditor from './code-editor';
-import Preview from './preview';
-import { useTypedSelector } from '../hooks/use-typed-selector';
-import ResizableWrapper from './resizable-wrapper';
-import { Cell } from '../state';
-import { useAction } from '../hooks/use-action';
-import { useAggregatedCode } from '../hooks/use-aggregated-code';
+import CodeEditor from './code-editor/code-editor';
+import Preview from './preview/preview';
+import { useTypedSelector } from '../../hooks/use-typed-selector';
+import ResizableWrapper from '../resizable-wrapper/resizable-wrapper';
+import { Cell } from '../../state';
+import { useAction } from '../../hooks/use-action';
+import { useAggregatedCode } from '../../hooks/use-aggregated-code';
 
 interface CodeCellProps {
   cell: Cell;

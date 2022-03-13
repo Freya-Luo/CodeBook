@@ -54,6 +54,7 @@ const Preview: React.FC<PreviewProps> = ({ id, code, bundleMsg }) => {
     setTimeout(() => {
       iframeRef.current.contentWindow.postMessage(code, '*');
     }, 30);
+    // eslint-disable-next-line
   }, [code]);
 
   return (

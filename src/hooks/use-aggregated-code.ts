@@ -51,13 +51,13 @@ export const useAggregatedCode = (id: string) => {
 
     let codeCells: string[] = [];
     for (const curCell of orderedCells) {
-      if (curCell.cellType == 'CODE') {
+      if (curCell.cellType === 'CODE') {
         // the code cell is the current cell, show the printf()/render() result
         // to its correpsonding preview component
-        if (curCell.id == id) {
+        if (curCell.id === id) {
           codeCells.push(predefinedFn);
-          console.log(curCell.content, curCell.content === '');
           if (curCell.content === '') {
+            // if the current cell does not have any code, do not show the err from previous ones
             codeCells = [predefinedFn];
           } else {
             codeCells.push(curCell.content);
@@ -68,7 +68,7 @@ export const useAggregatedCode = (id: string) => {
           codeCells.push(predefinedFnVoid, curCell.content);
         }
       }
-      if (curCell.id == id) break;
+      if (curCell.id === id) break;
     }
     return codeCells;
   }).join('\n');

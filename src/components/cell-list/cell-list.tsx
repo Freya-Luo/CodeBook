@@ -1,8 +1,8 @@
 import './cell-list.css';
 import { Fragment } from 'react';
-import { useTypedSelector } from '../hooks/use-typed-selector';
-import CellListItem from './cell-list-item';
-import AddCellBar from './add-cell-bar';
+import { useTypedSelector } from '../../hooks/use-typed-selector';
+import CellListItem from './cell-list-item/cell-list-item';
+import AddCellBar from '../add-cell-bar/add-cell-bar';
 
 const CellList: React.FC = () => {
   const cells = useTypedSelector(({ cells: { order, orgs } }) => {
