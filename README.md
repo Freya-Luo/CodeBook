@@ -115,3 +115,7 @@
   - BUT! this process is **asynchronous** => better not use `useSelector()` (may try `useAsyncSelector` from 3rd-party pkg)
 
   ![Diagram - Redux Store](./public/pics/redux-store.png)
+
+  ### When things become larger...
+
+  - Package-based development
