@@ -34,7 +34,7 @@ export const cellRouter = (filename: string, dir: string) => {
   });
 
   /**
-   * This router provides an API that writes any updates back to the files.
+   * This router provides an API that writes any updates back to the file.
    * If the file does not exist, it will be created automatically.
    */
   router.post('/cells', async (request, response) => {

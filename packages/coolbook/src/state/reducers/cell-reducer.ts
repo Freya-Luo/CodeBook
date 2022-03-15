@@ -42,7 +42,7 @@ const CellReducer = produce((state: CellState = initialState, action: Action): C
       state.loading = false;
       state.error = action.payload;
       return state;
-    case ActionType.UPDATE_CELLS_FAIL:
+    case ActionType.UPDATE_CELLS_TO_FILE_FAIL:
       state.error = action.payload;
       return state;
     case ActionType.UPDATE_CELL:

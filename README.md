@@ -1,15 +1,34 @@
-### Code Book
+## Code Book
 
-#### Note
+This is an **interactive browser-based JS coding and text editing** React Application. The coding part mimics the famous services like `CodePen` or `CodeSandBox`, but the code **`bundling and transpiling`** are done directly in the browser. Currently, the coding editor supports CommonJS and ES6 Modules syntax, and it does not support other frameworks, e.g., Vue or Angular.
 
-- if a specific version is need, jsut append the version to the package name with `@`
-  - e.g., `import React from 'react@16.0.0'`
+There are two special functions: `printf() and render()`.
+
+- `printf()` is like `console.log()`, which <u>directly shows the result</u> in the `Preview`
+  - if `val` is a reference val, `printf(val)` prints out its stringify format
+- `render()` is like `React.createElement()`, which <u>directly renders the JSXElement</u> onto the `Preview`
+  - when using this function, there is no need to `import` React/ReactDOM explicitly as it already supports them
+
+If multiple code cells are created, the execution follows the **cumulative code rule**. A code cell can access all the global objects defined in its previouse (above) cells.
 
 ###### Constraints
 
 - importing NPM packages has limitations
-  - modules that are worked in a node env
-  - modules that require CSS file or font files
+  - some modules that are required to worked in a node env
+  - some modules that require CSS files or font files
+
+#### How To Start
+
+- in the project root directory
+  - `npm run start-dev` starts up the app in `development` mode while `npm run start-prod` starts it up in the `production` environment
+- to run `CLI`, in `cli/dist`, in a separate terminal
+  - `node index.js serve` serves the application and creates a default file `coolbook.js`
+    - `coolbook.js` is a file that stores all the editors content and metadata in JSON format
+  - `node index.js serve <filename>` customizes the app using the given file specified by this `filename`
+  - `node index.js server --port <portnumber>` runs the server on the specified port
+    - in `development` mode, both ports `3000` & `<portnumber>` can serve the app (same instance)
+    - in `production` mode, only specified `<portnumber>` has access to the server; otherwise, default port `8017` is used
+  - `node index.js --help` gives information about the usage of this interface
 
 #### Challenges
 
@@ -118,7 +137,7 @@
 
 ---
 
-### When things become larger...
+#### When things become larger...
 
 - Package-based development
   - CLI: start up the local-server API

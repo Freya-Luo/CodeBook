@@ -11,7 +11,7 @@ import {
   FetchCellsAction,
   FetchCellsSuccessAction,
   FetchCellsFailAction,
-  UpdateCellsFailAction,
+  UpdateCellsToFileFailAction,
 } from '../actions';
 import { Cell, CellType } from '../cell';
 import { Dispatch } from 'react';
@@ -84,6 +84,7 @@ export const createBuilder = (cellId: string, inputCode: string) => {
   };
 };
 
+// fetch a list of cells from a file
 export const fetchCells = () => {
   return async (dispatch: Dispatch<Action>) => {
     const fetchCells: FetchCellsAction = {
@@ -109,7 +110,8 @@ export const fetchCells = () => {
   };
 };
 
-export const updateCells = () => {
+// write updates back into the file
+export const updateCellsToFile = () => {
   return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
     const {
       cells: { orgs, order },
@@ -120,11 +122,11 @@ export const updateCells = () => {
       // follow the same interface defined in  routes/cells.ts
       await axios.post('/cells', { cells: updatedCells });
     } catch (err: any) {
-      const updateCellsFail: UpdateCellsFailAction = {
-        type: ActionType.UPDATE_CELLS_FAIL,
+      const updateCellsToFileFail: UpdateCellsToFileFailAction = {
+        type: ActionType.UPDATE_CELLS_TO_FILE_FAIL,
         payload: err.message,
       };
-      dispatch(updateCellsFail);
+      dispatch(updateCellsToFileFail);
     }
   };
 };
