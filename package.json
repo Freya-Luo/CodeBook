@@ -5,6 +5,7 @@
     "lerna": "^3.22.1"
   },
   "scripts": {
-    "start": "lerna run start --parallel"
+    "start-dev": "lerna run start --parallel",
+    "start-prod": "lerna run start --parallel --scope local-server --scope cli"
   }
 }
