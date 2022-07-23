@@ -21,9 +21,11 @@ If multiple code cells are created, the execution follows the **cumulative code 
   - some modules that require CSS files or font files
 
 #### How To Start
-
+- build our service `coolbook` first
+  - `npm i` and `npm run build` in `coolbook/`
 - in the project root directory
   - `npm run start-dev` starts up the app in `development` mode while `npm run start-prod` starts it up in the `production` environment
+     - this will build up `cli` and `local-server` 
 - to run `CLI`, in `cli/dist`, in a separate terminal
   - `node index.js serve` serves the application and creates a default file `coolbook.js`
     - `coolbook.js` is a file that stores all the editors content and metadata in JSON format
