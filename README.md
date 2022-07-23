@@ -14,6 +14,16 @@ There are two special functions: `printf() and render()`.
 
 If multiple code cells are created, the execution follows the **cumulative code rule**. A code cell can access all the global objects defined in its previouse (above) cells.
 
+#### Packages
+- `coolbook`: contains all the source code of this React application
+- `cli`: allows users to run command **from the terminal** to start off the `local-server` program
+- `local-server`: `get rid of spinning up create-react-app development server`
+  - a local server of this React app running on users' machines
+  - **routes**:
+    - GET `/` => fetch `index.html/index.js` for React app
+    - GET `/cells` => fetch the list of code/text cells stored in a file (filename is provided via CLI)
+    - POST `/cells` => updates cells, and writes into the file
+  
 ###### Constraints
 
 - importing NPM packages has limitations
