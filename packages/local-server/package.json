@@ -1,6 +1,6 @@
 {
   "name": "local-server",
-  "version": "1.0.0",
+  "version": "3.22.1",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,7 @@
     "typescript": "^4.6.2"
   },
   "dependencies": {
-    "coolbook": "^0.1.0",
+    "coolbook": "^3.22.1",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "http-proxy-middleware": "^2.0.4"
