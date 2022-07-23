@@ -1,5 +1,8 @@
 ## Code Book
 
+### Project Overview
+![Overview](./packages/coolbook/public/pics/codebook.gif)
+
 This is an **interactive browser-based JS coding and text editing** React Application. The coding part mimics the famous services like `CodePen` or `CodeSandBox`, but the code **`bundling and transpiling`** are done directly in the browser. Currently, the coding editor supports CommonJS and ES6 Modules syntax, and it does not support other frameworks, e.g., Vue or Angular.
 
 There are two special functions: `printf() and render()`.
